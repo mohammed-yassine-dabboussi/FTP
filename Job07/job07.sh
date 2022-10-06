@@ -1,8 +1,8 @@
 #!/bin/bash
-sudo apt-get install proftpd
-echo proftpd.txt >> /etc/proftpd/proftpd.conf
-echo tls.txt >> /etc/proftpd/tls.conf
-echo modules.txt >> /etc/proftpd/modules.conf
+sudo apt-get install proftpd*
+echo proftpd.txt > /etc/proftpd/proftpd.conf
+echo tls.txt > /etc/proftpd/tls.conf
+echo modules.txt > /etc/proftpd/modules.conf
 sudo apt install filezilla
 sudo apt-get install openssl
 mkdir /etc/proftpd/ssl
