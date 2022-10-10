@@ -1,26 +1,26 @@
 #!/bin/bash
+cd /home/yassine/Bureau/ftp/Job09
+sudo groupadd ftpadmin
+sudo chmod 770 ftpadmin
 
-# Donner les droits Sudo 
-If 
-sudo usermod -a -G sudo 'user'
-
-#!/bin/bash
-cd ~/Bureau/shell-exe/job9
-cat home/yassine/Bureau/shell-exe/job9/Shell_Userlist.csv | while read varligne
+cat /home/yassine/Bureau/ftp/liste.csv | while read varligne
 do
 	password=`echo $varligne |cut -d ',' -f4`
 	username=`echo $varligne | cut -d ',' -f2`
 	username=`echo ${username,,}`
 	role=`echo $varligne |cut -d ',' -f5` 
 	echo $role
-	if [ ${role:0:5} = "Admin" ]
+	if [ $role = "Admin" ]
 	then
-		echo "creation de l'utilisateur : $username"
-		sudo adduser -m -$username -p $password
+		echo "Création de l'utilisateur : $username"
+		pass=$(perl -e 'print crypt($ARGV[0], "password")' $password)
+    		sudo useradd -m -p "$pass" "$username"
 		echo "changement de rôle de : $username"
 		sudo usermod -aG sudo $username
+		sudo adduser $username ftpadmin
 	else
 		echo "creation de l'utilisateur : $username"
-		sudo adduser -m $username -p $password
+		pass=$(perl -e 'print crypt($ARGV[0], "password")' $password)
+    		sudo useradd -m -p "$pass" "$username"
 	fi		
-done < <(tail -n +2 Shell_Userlist.csv)
+done < <(tail -n +2 users.csv)
